@@ -1,8 +1,6 @@
 ﻿using System;
 
-namespace ConsoleApp1
-{
-    internal class Program
+    class Program
     {
         static List<Auditorium> auditoriums;
         static bool auditoriumsInit = false;
@@ -259,19 +257,9 @@ namespace ConsoleApp1
                         switch (strProjector)
                         {
                             case "да":
-                            case "Да":
-                            case "ДА":
-                            case "дА":
                                 changingProjector = true;
                                 break;
-                            case "нет":
-                            case "Нет":
-                            case "НЕТ":
-                            case "нЕТ":
-                            case "нЕт":
-                            case "неТ":
-                            case "НеТ":
-                            case "НЕт":
+                            case "нет": 
                                 changingProjector = false;
                                 break;
                             default:
@@ -535,4 +523,3 @@ namespace ConsoleApp1
             }
         }
     }
-}

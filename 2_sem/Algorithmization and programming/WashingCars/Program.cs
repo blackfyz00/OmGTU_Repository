@@ -28,14 +28,11 @@ class Car
     private String Name { get; set; }
 
     public Car(String name)
-    {
         Name = name;
-    }
 
     public String getName()
-    {
         return Name;
-    }
+
 }
 
 class Garage
@@ -62,9 +59,7 @@ class Garage
     }
 
     public String getName()
-    {
         return Name;
-    }
 }
 
 class CarWash
