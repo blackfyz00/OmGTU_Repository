@@ -38,6 +38,7 @@ public class Graph
 
     public void FindMST(int beginvertex)
     {
+        int sum = 0;
         HashSet<int> unvisited = new HashSet<int>();
         HashSet<int> visited = new HashSet<int>();
 
@@ -83,6 +84,7 @@ public class Graph
 
                 {   
                     mst.Add(edge); edge.otm = true;
+                    sum += edge.Weight;
                 }             
 
             }
@@ -90,7 +92,7 @@ public class Graph
 
         }
 
-        Console.WriteLine("Остовное дерево:\nОткуда -  Куда -  Вес");
+        Console.WriteLine($"Остовное дерево весом {sum}:\nОткуда -  Куда -  Вес");
 
         foreach (var edge in mst)
         {
