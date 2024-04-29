@@ -14,7 +14,7 @@ class Program
                           { o,6,3,0,8 },
                           { o,o,o,8,o } };
 
-        int start = 1; int end = 5;
+        int start = 2; int end = 5;
 
         int thisvert = start - 1; int[] min = { 100, 0 };
         int[] mark = new int[5]; mark[thisvert] = 0;
@@ -23,9 +23,11 @@ class Program
 
         bool[] constmark = new bool[5]; constmark[thisvert] = true; int constmarker = 0;
 
-        int[] parent = new int[5]; parent[thisvert] = 0;
+        Stack<int> parent = new Stack<int>();
+
+        /*int[] parent = new int[5]; parent[thisvert] = 0;
         for (int i = 0; i < graph.Length / 5; i++)
-            if (i != thisvert) parent[i] = 200;
+            if (i != thisvert) parent[i] = 200;*/
 
 
 
@@ -33,7 +35,10 @@ class Program
         {
             for (int i = 0; i < graph.Length / 5; i++)
                 if (mark[i] > mark[thisvert] + graph[thisvert, i])
-                { mark[i] = mark[thisvert] + graph[thisvert, i]; parent[i] = thisvert + 1; }
+                { 
+                    mark[i] = mark[thisvert] + graph[thisvert, i]; 
+                    if(!parent.Contains(thisvert + 1)) parent.Push(thisvert + 1); 
+                }
 
             for (int i = 0; i < graph.Length / 5; i++)
                 if (mark[i] < min[0] && constmark[i] == false)
@@ -47,9 +52,7 @@ class Program
         Console.WriteLine($"Минимальное расстояние по алгоритму Дейкстры от вершины {start} " +
             $"до вершины {end} = {mark[end - 1]}");
         Console.Write($"Восстановление пути: {end} - ");
-        for(int i = end - 1; i > 1; i--)
-        {
-            Console.Write($"{parent[i]} - ");
-        }
+        foreach (var vertex in parent)
+            Console.Write($"{vertex} - ");
     }
 }
