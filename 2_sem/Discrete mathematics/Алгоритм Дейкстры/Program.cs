@@ -7,52 +7,51 @@ class Program
 {
     static void Main()
     {
-        const int o = 200;
-        int[,] graph = {  { 0,5,4,o,o },
-                          { 5,0,3,6,o },
-                          { 4,3,0,3,o },
-                          { o,6,3,0,8 },
-                          { o,o,o,8,o } };
+        const int o = 200000; const int countcities = 6;
+        int[,] cities = {  {0,700,200,o,o,o },
+                          { 700,0,300,200,o,400},
+                          { 200,300,0,700,600,o},
+                          { o,200,700,0,300,100},
+                          { o,o,600,300,0,500},
+                          { o,400,o,100,500,0}};
 
-        int start = 2; int end = 5;
+        int startcity = 2; int endcity = 5;
 
-        int thisvert = start - 1; int[] min = { 100, 0 };
-        int[] mark = new int[5]; mark[thisvert] = 0;
-        for (int i = 0; i < graph.Length / 5; i++)
-            if (i != thisvert) mark[i] = 200;
+        int thiscity = startcity - 1; int[] min = { 100, 0 };
+        int[] mark = new int[countcities]; mark[thiscity] = 0;
+        for (int i = 0; i < countcities; i++)
+            if (i != thiscity) mark[i] = o;
 
-        bool[] constmark = new bool[5]; constmark[thisvert] = true; int constmarker = 0;
+        bool[] constmark = new bool[countcities]; constmark[thiscity] = true; int constmarker = 0;
 
-        Stack<int> parent = new Stack<int>();
+        int[] parent = new int[countcities]; parent[thiscity] = o;
 
-        /*int[] parent = new int[5]; parent[thisvert] = 0;
-        for (int i = 0; i < graph.Length / 5; i++)
-            if (i != thisvert) parent[i] = 200;*/
-
-
-
-        while (constmarker != graph.Length / 5)
+        while (constmarker != countcities)
         {
-            for (int i = 0; i < graph.Length / 5; i++)
-                if (mark[i] > mark[thisvert] + graph[thisvert, i])
-                { 
-                    mark[i] = mark[thisvert] + graph[thisvert, i]; 
-                    if(!parent.Contains(thisvert + 1)) parent.Push(thisvert + 1); 
+            for (int i = 0; i < countcities; i++)
+                if (mark[i] > mark[thiscity] + cities[thiscity, i] && constmark[i] != true)
+                {
+                    mark[i] = mark[thiscity] + cities[thiscity, i];
+                    parent[i] = thiscity+1;
                 }
 
-            for (int i = 0; i < graph.Length / 5; i++)
+            for (int i = 0; i < countcities; i++)
                 if (mark[i] < min[0] && constmark[i] == false)
                 { min[0] = mark[i]; min[1] = i; }
 
-            constmark[min[1]] = true; constmarker++;          
-            thisvert = min[1];
-            min[0] = 200; min[1] = 0;
+            constmark[min[1]] = true; constmarker++;
+            thiscity = min[1];
+            min[0] = o; min[1] = 0;
         }
 
-        Console.WriteLine($"Минимальное расстояние по алгоритму Дейкстры от вершины {start} " +
-            $"до вершины {end} = {mark[end - 1]}");
-        Console.Write($"Восстановление пути: {end} - ");
-        foreach (var vertex in parent)
-            Console.Write($"{vertex} - ");
+        Console.WriteLine($"Минимальное расстояние по алгоритму Дейкстры от города {startcity} " +
+            $"до города {endcity} = {mark[endcity - 1]}");
+        Console.Write($"Восстановление пути: {endcity} - ");
+        
+        while(endcity!=startcity)
+        {
+            Console.Write(parent[endcity - 1] + " - ");
+            endcity = parent[endcity - 1];
+        }
     }
 }
